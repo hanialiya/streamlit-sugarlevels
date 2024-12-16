@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 
 # 1. Membaca data dari file CSV
-data = pd.read_csv('kadar_gula.csv')
+data = pd.read_csv('dataset.csv')
 
 # 2. Menambahkan kolom kategori kadar gula darah
 def categorize_gula(x):
