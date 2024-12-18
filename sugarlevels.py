@@ -1,17 +1,14 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
-import seaborn as sns
 
-#konfigurasi halaman streamlit
+# konfigurasi halaman streamlit
 st.set_page_config(page_title="Prediksi Kadar Gula Darah", layout="wide")
 
-#judul
+# judul
 st.title("Prediksi Kadar Gula Darah dengan Machine Learning")
 
+# file uploader
 uploaded_file = st.file_uploader("Unggah file CSV", type=["csv"])
 
 if uploaded_file is not None:
@@ -33,17 +30,19 @@ if uploaded_file is not None:
     if 'Kadar_Gula' in data.columns:
         data['Kategori'] = data['Kadar_Gula'].apply(categorize_gula)
 
-        # Membuat DataFrame untuk visualisasi
-        df_plot = data[['id', 'Kadar_Gula']].copy()
+        # Membuat kolom ID jika belum ada
         if 'id' not in data.columns:
-            df_plot['id'] = range(1, len(data) + 1)
-        df_plot = df_plot.set_index('id')
+            data['id'] = range(1, len(data) + 1)
+
+        # Membuat DataFrame untuk visualisasi
+        df_plot = data[['id', 'Kadar_Gula']].set_index('id')
 
         # Membuat line plot
         st.write("**Visualisasi Line Plot (ID vs Kadar Gula):**")
         fig, ax = plt.subplots(figsize=(10, 6))
-        df_plot.plot(kind='line', ax=ax)
+        df_plot['Kadar_Gula'].plot(kind='line', ax=ax, marker='o', color='blue')
 
+        # Menambahkan detail visualisasi
         plt.title('Perbandingan Kadar Gula Darah\n', size=16)
         plt.ylabel('Kadar Gula Darah', size=14)
         plt.xlabel('ID (Individu)', size=14)
