@@ -33,20 +33,20 @@ if uploaded_file is not None:
     if 'Kadar_Gula' in data.columns:
         data['Kategori'] = data['Kadar_Gula'].apply(categorize_gula)
 
-        # Tampilkan data setelah penambahan kolom kategori
-        st.write("**Dataset setelah menambahkan kategori:**")
-        st.dataframe(data)
-
-        # Membuat line plot sederhana
+        # Membuat DataFrame untuk visualisasi
+        df_plot = data[['id', 'Kadar_Gula']].copy()
         if 'id' not in data.columns:
-            data['id'] = range(1, len(data) + 1)
+            df_plot['id'] = range(1, len(data) + 1)
+        df_plot = df_plot.set_index('id')
 
-        st.write("**Visualisasi Line Plot (ID vs Kategori Gula):**")
-        fig, ax = plt.subplots()
-        plt.plot(data['id'], data['Kategori'], marker='o', linestyle='-', color='blue')
-        plt.xlabel('ID')
-        plt.ylabel('Kategori Gula')
-        plt.title('Line Plot ID vs Kategori Gula')
+        # Membuat line plot
+        st.write("**Visualisasi Line Plot (ID vs Kadar Gula):**")
+        fig, ax = plt.subplots(figsize=(10, 6))
+        df_plot.plot(kind='line', ax=ax)
+
+        plt.title('Perbandingan Kadar Gula Darah\n', size=16)
+        plt.ylabel('Kadar Gula Darah', size=14)
+        plt.xlabel('ID (Individu)', size=14)
         plt.grid(True)
         st.pyplot(fig)
     else:
