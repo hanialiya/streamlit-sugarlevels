@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 st.set_page_config(page_title="Prediksi Kadar Gula Darah", layout="wide")
 
 # judul
-st.title("Prediksi Kadar Gula Darah dengan Machine Learning")
+st.title("Prediksi Kadar Gula Darah")
 
 # file uploader
 uploaded_file = st.file_uploader("Unggah file CSV", type=["csv"])
